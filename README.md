@@ -24,3 +24,5 @@ This project turns social media comments into audience segments and marketing re
 - [x] Day 2 (5 Nov): collected Table A, the posts table, with `collect_posts.py` (42 YouTube lawn-brand videos from 7 brands) and cleaned and labelled it with `label_posts.py`
 
 - [x] Day 3 (7 Nov): collected Table B, the comments table, with `collect_comments.py` (2,488 top-level comments from the 42 videos)
+
+- [x] Day 4 (8 Nov): cleaned the comments and detected language type with `clean_comments.py` (2,368 comments left: 1,557 English, 607 Roman Urdu, 137 emoji-only, 67 Urdu; saved as `data/fashion_comments_clean.csv`)
