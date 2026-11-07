@@ -22,3 +22,5 @@ This project turns social media comments into audience segments and marketing re
 - [x] Day 1 (4-5 Nov): repository created, Project 1 files added, README written
 
 - [x] Day 2 (5 Nov): collected Table A, the posts table, with `collect_posts.py` (42 YouTube lawn-brand videos from 7 brands) and cleaned and labelled it with `label_posts.py`
+
+- [x] Day 3 (7 Nov): collected Table B, the comments table, with `collect_comments.py` (2,488 top-level comments from the 42 videos)
