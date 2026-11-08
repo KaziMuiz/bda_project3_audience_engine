@@ -26,3 +26,13 @@ This project turns social media comments into audience segments and marketing re
 - [x] Day 3 (7 Nov): collected Table B, the comments table, with `collect_comments.py` (2,488 top-level comments from the 42 videos)
 
 - [x] Day 4 (8 Nov): cleaned the comments and detected language type with `clean_comments.py` (2,368 comments left: 1,557 English, 607 Roman Urdu, 137 emoji-only, 67 Urdu; saved as `data/fashion_comments_clean.csv`)
+
+- [x] Day 5 (7 Nov): labelled every comment with topic, sentiment and purchase intent using `label_comments.py` (saved as `data/fashion_comments_labeled.csv`)
+
+## Known limitations
+
+- Language type, topic, sentiment and purchase intent are all rule-based (word lists and VADER), not trained models, so some comments are mislabelled.
+- VADER cannot read Roman Urdu or Urdu. For those comments sentiment comes from small hand-made word lists plus emoji, so negative feelings are probably undercounted (only 104 of 2,368 comments are labelled negative).
+- Many comments are about the song or the actress in the video, not the clothes, so a large share of comments fall under `song_music` and `model_celebrity`.
+- 32 of the 42 videos come from reseller, vlogger or fan channels, not the brands' official channels. The `channel_type` column in the posts table marks which is which.
+- YouTube does not provide share counts, so the `shares` column is empty.
