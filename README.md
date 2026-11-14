@@ -29,6 +29,28 @@ This project turns social media comments into audience segments and marketing re
 
 - [x] Day 5 (7 Nov): labelled every comment with topic, sentiment and purchase intent using `label_comments.py` (saved as `data/fashion_comments_labeled.csv`)
 
+- [x] Day 6 (12 Nov): Question 1, which content attracts attention, with `analyze_content.py` (4 charts in `figures/`, 3 summary tables in `data/`)
+
+## Question 1: which content attracts attention?
+
+Two measures are used so that old and new videos are compared fairly: engagement rate (likes plus comments, per 100 views) and views per day. Medians are used because a few viral videos would distort averages.
+
+| Content type      | Videos | Median views | Engagement per 100 views | Views per day |
+|-------------------|--------|--------------|--------------------------|---------------|
+| creator_video     | 6      | 72,164       | 1.25                     | 474           |
+| short_clip        | 18     | 344,524      | 1.02                     | 439           |
+| sale_announcement | 14     | 42,024       | 0.86                     | 433           |
+| campaign_film     | 4      | 795,957      | 0.36                     | 415           |
+
+- Official campaign films collect the most total views but get the least reaction per viewer. They are also the oldest videos (median age about 7 years).
+- Once age is corrected for, reach per day is similar for all four content types (about 415 to 474 views a day), so the format alone does not decide reach.
+- Creator videos (vlogs and reviews) get the most reaction per viewer.
+- Third-party channels get about twice the engagement of official channels (1.09 vs 0.55 per 100 views).
+- By brand, Alkaram has the highest engagement (1.60) and Gul Ahmed the lowest (0.44).
+- Some groups are very small (4 campaign films, 1 Bonanza Satrangi video), so these are patterns in this sample, not rules.
+
+Charts: `figures/q1_engagement_by_content_type.png`, `figures/q1_views_per_day_by_content_type.png`, `figures/q1_engagement_by_channel_type.png`, `figures/q1_engagement_by_brand.png`.
+
 ## Known limitations
 
 - Language type, topic, sentiment and purchase intent are all rule-based (word lists and VADER), not trained models, so some comments are mislabelled.
