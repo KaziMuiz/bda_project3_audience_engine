@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Reply and write captions in Roman Urdu as well as English",
+    "action": "Answer comments in the language they are written in, and add a Roman Urdu line about price and availability to the caption.",
+    "evidence": "26% of comments are in Roman Urdu. Among topic comments, price, location and discount questions make up 49% of Roman Urdu comments but only 21% of English ones.",
+    "audience": "Roman Urdu commenters",
+    "comments_affected": 607,
+    "priority": 1
+  },
+  {
+    "title": "Use the song and the models: name the song and release more of it",
+    "action": "Write the song name in the description, release the full song or a behind-the-scenes clip, and tag the models.",
+    "evidence": "278 comments (11.7%) are about the song and 152 (6.4%) about the models, more than any product topic except design.",
+    "audience": "Song and music fans, fans of the models",
+    "comments_affected": 430,
+    "priority": 2
+  },
+  {
+    "title": "Answer price and where-to-buy questions in the video itself",
+    "action": "Put the price range, the nearest store or the online link in the first lines of the description and in a pinned comment, and reply to these questions.",
+    "evidence": "248 comments (10.5%) ask about buying. The segment 'Price and where-to-buy askers' has 148 comments and 58% of them are direct questions. 298 comments are about price or location.",
+    "audience": "Price and where-to-buy askers",
+    "comments_affected": 248,
+    "priority": 3
+  },
+  {
+    "title": "Zellbury: make buying easier",
+    "action": "For Zellbury, add store and online links more visibly, since the most buying questions come here.",
+    "evidence": "17.0% of Zellbury comments ask about buying, the highest of the 6 brands with at least 150 comments (average 10.8%).",
+    "audience": "Zellbury viewers",
+    "comments_affected": 43,
+    "priority": 4
+  },
+  {
+    "title": "Respond publicly to complaints about trust, quality and sales",
+    "action": "Reply to negative comments, explain returns and quality checks, and make sale terms clear in the video.",
+    "evidence": "Share of negative comments by topic: price 10%, quality fabric 11%, discount sale 12%, trust complaint 67%. 'trust complaint' is the most negative topic.",
+    "audience": "Unhappy customers",
+    "comments_affected": 38,
+    "priority": 5
+  },
+  {
+    "title": "Work with creators and keep a clear call to action in campaign films",
+    "action": "Partner with creators and vloggers, whose 'creator video' videos get the most reaction per viewer, and add a question or a link to the official 'campaign film' videos.",
+    "evidence": "Median engagement is 1.25 per 100 views for creator videos and 0.36 for campaign films. Third-party channels get 1.09 per 100 views, official channels 0.55.",
+    "audience": "All viewers",
+    "comments_affected": 10,
+    "priority": 6
+  },
+  {
+    "title": "Study the posts that beat their own group",
+    "action": "Look at what these posts do differently (the creator, the hook, the title) and repeat it.",
+    "evidence": "'Aina Asif loving zellbury summer collection🌜#ainaasif #trending #viral' (Zellbury) has 3.7x the typical engagement of a creator video. 1 post is unusually strong without data problems.",
+    "audience": "Marketing team",
+    "comments_affected": 0,
+    "priority": 7
+  }
+]
