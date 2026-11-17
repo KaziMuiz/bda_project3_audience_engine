@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pakistan Social Audience &amp; Campaign Intelligence Engine</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#1d2230;--muted:#5f6779;--line:#e2e5ee;--accent:#4f6df5}
+@media (prefers-color-scheme:dark){:root{--bg:#14161d;--card:#1d2029;--text:#eceef5;--muted:#a3a9ba;--line:#2e3240;--accent:#7f95ff}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+header{padding:28px 20px 12px;max-width:1100px;margin:auto}
+h1{margin:0 0 6px;font-size:1.6rem}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 20px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+nav a{color:var(--accent);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:20px;font-size:.9rem}
+main{max-width:1100px;margin:auto;padding:0 20px 40px}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:20px}
+h2{margin:0 0 4px;font-size:1.2rem}
+.sub{color:var(--muted);margin:0 0 14px;font-size:.92rem}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:12px 0}
+img{max-width:100%;border:1px solid var(--line);border-radius:8px;background:#fff}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;white-space:nowrap}
+.rec{border-left:4px solid var(--accent);padding:8px 14px;margin:12px 0;background:var(--bg);border-radius:6px}
+.rec h3{margin:0 0 4px;font-size:1rem}
+.rec p{margin:4px 0;font-size:.92rem}
+.tag{color:var(--muted);font-size:.8rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:10px 20px 30px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Pakistan Social Audience &amp; Campaign Intelligence Engine</h1>
+  <p>Lawn-brand YouTube videos and their comments, turned into audience segments and marketing advice.</p>
+</header>
+<nav>
+  <a href="#q1">1. Content</a><a href="#q2">2. Audience wants</a><a href="#q3">3. Unusual posts</a>
+  <a href="#q4">4. Segments</a><a href="#q5">5. Next steps</a>
+</nav>
+<main id="app"><section><p class="sub">Loading results...</p></section></main>
+<footer>Rule-based labels and a small sample: read the patterns as indications, not proof. See the README for limitations.</footer>
+<script>
+const f = (n, d = 0) => Number(n).toLocaleString(undefined, {maximumFractionDigits: d});
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nice = s => String(s).replace(/_/g, ' ');
+const img = (name, alt) => `<img src="/figures/${name}" alt="${alt}">`;
+
+function table(rows, cols) {
+  const head = cols.map(c => `<th>${c[0]}</th>`).join('');
+  const body = rows.map(r => '<tr>' + cols.map(c => `<td>${esc(c[1](r))}</td>`).join('') + '</tr>').join('');
+  return `<div class="scroll"><table><tr>${head}</tr>${body}</table></div>`;
+}
+
+function section(id, title, sub, inner) {
+  return `<section id="${id}"><h2>${title}</h2><p class="sub">${sub}</p>${inner}</section>`;
+}
+
+fetch('/api/results').then(r => r.json()).then(d => {
+  const q1cols = key => [
+    [key, r => nice(r[key])], ['Videos', r => r.videos],
+    ['Median views', r => f(r.median_views)],
+    ['Engagement per 100 views', r => f(r.median_engagement_rate * 100, 2)],
+    ['Views per day', r => f(r.median_views_per_day)],
+    ['Median age (days)', r => f(r.median_age_days)]];
+
+  const q1 = section('q1', '1. Which content attracts attention?',
+    'Engagement = (likes + comments) per 100 views. Views per day corrects for video age. Medians are used because a few viral videos distort averages.',
+    `<div class="charts">${img('q1_engagement_by_content_type.png', 'Engagement by content type')}${img('q1_views_per_day_by_content_type.png', 'Views per day by content type')}${img('q1_engagement_by_channel_type.png', 'Official vs third-party')}${img('q1_engagement_by_brand.png', 'Engagement by brand')}</div>
+     <h3>By content type</h3>${table(d.q1.content_type, q1cols('content_type'))}
+     <h3>By channel</h3>${table(d.q1.channel_type, q1cols('channel_type'))}
+     <h3>By brand</h3>${table(d.q1.brand, q1cols('brand'))}`);
+
+  const q2 = section('q2', '2. What does the audience want to know?',
+    'Topics found in the comments (comments that match no topic are left out).',
+    `<div class="charts">${img('q2_topics.png', 'Topics')}${img('q2_topics_by_language.png', 'Topics by language')}</div>
+     ${table(d.q2.topics, [['Topic', r => nice(r.topic)], ['Comments', r => r.comments],
+       ['% of all comments', r => r.share_of_all_pct], ['% asking to buy', r => r.inquiry_pct],
+       ['% negative', r => r.negative_pct]])}`);
+
+  const q3 = section('q3', '3. Which posts are unusual?',
+    'Each post is compared with other posts of the same content type. A caution means the numbers may be exaggerated.',
+    table(d.q3.unusual, [['Brand', r => r.brand], ['Type', r => nice(r.content_type)],
+      ['Title', r => r.title], ['Views', r => f(r.views)], ['Direction', r => r.direction],
+      ['Why it is unusual', r => r.unusual_reason], ['Caution', r => r.caution]]));
+
+  const q4 = section('q4', '4. Which audience needs should the brand address?',
+    'Groups of similar comments found by clustering (TF-IDF and KMeans), named from what each group contains.',
+    `<div class="charts">${img('q4_segment_sizes.png', 'Segment sizes')}${img('q4_segment_sentiment.png', 'Segment sentiment')}${img('q4_segment_map.png', 'Segment map')}</div>
+     ${table(d.q4.segments, [['Segment', r => r.segment], ['Comments', r => r.comments],
+       ['Main topic', r => nice(r.main_topic)], ['Language', r => nice(r.main_language)],
+       ['% positive', r => r.positive_pct], ['% negative', r => r.negative_pct],
+       ['% asking', r => r.inquiry_pct], ['Typical words', r => r.top_terms]])}`);
+
+  const q5 = section('q5', '5. What should the marketing team do next?',
+    'Each recommendation comes with the evidence it is based on, calculated from the data.',
+    d.q5.map(r => `<div class="rec"><h3>${r.priority}. ${esc(r.title)}</h3>
+      <p><b>Action:</b> ${esc(r.action)}</p><p><b>Evidence:</b> ${esc(r.evidence)}</p>
+      <p class="tag">Audience: ${esc(r.audience)}</p></div>`).join(''));
+
+  document.getElementById('app').innerHTML = q1 + q2 + q3 + q4 + q5;
+}).catch(() => {
+  document.getElementById('app').innerHTML =
+    '<section><p class="sub">Could not load results. Run the analysis scripts first, then start the app from the repo root.</p></section>';
+});
+</script>
+</body>
+</html>

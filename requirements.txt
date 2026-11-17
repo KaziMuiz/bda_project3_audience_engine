@@ -1,0 +1,8 @@
+pandas
+numpy
+matplotlib
+scikit-learn
+vaderSentiment
+flask
+google-api-python-client
+python-dotenv
