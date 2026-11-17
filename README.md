@@ -31,6 +31,8 @@ This project turns social media comments into audience segments and marketing re
 
 - [x] Day 6 (12 Nov): Question 1, which content attracts attention, with `analyze_content.py` (4 charts in `figures/`, 3 summary tables in `data/`)
 
+- [x] Questions 2 to 5, Flask app and dashboard (16 Nov): `cluster_comments.py`, `analyze_audience.py`, `find_unusual_posts.py`, `build_recommendations.py`, `app.py`
+
 ## Question 1: which content attracts attention?
 
 Two measures are used so that old and new videos are compared fairly: engagement rate (likes plus comments, per 100 views) and views per day. Medians are used because a few viral videos would distort averages.
@@ -58,3 +60,25 @@ Charts: `figures/q1_engagement_by_content_type.png`, `figures/q1_views_per_day_b
 - Many comments are about the song or the actress in the video, not the clothes, so a large share of comments fall under `song_music` and `model_celebrity`.
 - 32 of the 42 videos come from reseller, vlogger or fan channels, not the brands' official channels. The `channel_type` column in the posts table marks which is which.
 - YouTube does not provide share counts, so the `shares` column is empty.
+
+## How to run
+
+1. `pip install -r requirements.txt`
+2. Put a YouTube Data API key in a `.env` file as `YOUTUBE_API_KEY=...` (only needed to collect new data; the collected data is already in `data/`).
+3. Run in this order: `collect_posts.py`, `label_posts.py`, `collect_comments.py`, `clean_comments.py`, `label_comments.py`, `analyze_content.py`, `cluster_comments.py`, `analyze_audience.py`, `find_unusual_posts.py`, `build_recommendations.py`
+4. `py app.py` and open http://127.0.0.1:5000
+
+## Main findings
+
+- 7 audience segments were found in 1,628 comments, including price and where-to-buy askers, ready-to-buy shoppers, song fans, and fans of the models.
+- Roman Urdu commenters (about a quarter of all comments) ask far more about price, location and discounts than English commenters.
+- Many comments are about the song and the models, not the clothes.
+- 10 of 42 posts are unusual compared with posts of the same content type.
+- Seven recommendations are generated from the data, each with its evidence (see the dashboard).
+
+## Limitations (additions)
+
+- The clustering score is low (silhouette about 0.12), which is normal for short comments, and two segments are partly grouped by language.
+- Only 42 videos were analysed, so unusual-post detection is indicative, and some posts have very few views.
+- Recommendations are rules applied to the results, not a trained model.
+- Project 1 (Samsung Galaxy Z Fold 8 comments) is kept in `project1_youtube_comments/` and was not used for Project 3's dataset.
